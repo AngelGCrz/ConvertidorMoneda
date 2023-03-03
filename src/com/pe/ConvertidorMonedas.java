@@ -18,7 +18,7 @@ public class ConvertidorMonedas extends JFrame {
     super("Conversor");
 
     // Crear opciones para JComboBox
-    String[] opciones = {"Conversor de Monedas", "Conversor de Temperatura"};
+    String[] opciones = { "Conversor de Monedas", "Conversor de Temperatura" };
 
     // Crear JComboBox
     JComboBox<String> cboOpciones = new JComboBox<>(opciones);
@@ -42,44 +42,63 @@ public class ConvertidorMonedas extends JFrame {
           pnlConversion.add(lblCantidad);
           pnlConversion.add(txtCantidad);
 
-          // Crear JComboBox para seleccionar conversión
-          JComboBox<String> cboConversion = new JComboBox<>(new String[]{"Soles a Dólares", "Dólares a Soles"});
-
-          // Agregar JComboBox al JPanel
-          pnlConversion.add(cboConversion);
-
           // Crear botón para realizar conversión
           JButton btnOK = new JButton("OK");
 
           // Agregar ActionListener al botón
           btnOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-              // Obtener cantidad ingresada y conversión seleccionada
+              // Obtener cantidad ingresada
               double cantidad = Double.parseDouble(txtCantidad.getText());
-              String conversion = (String) cboConversion.getSelectedItem();
 
-              // Realizar conversión
-              double resultado = 0;
-              String mensajeResultado = "";
-              if (conversion.equals("Soles a Dólares")) {
-                resultado = cantidad / 3.80;
-                mensajeResultado = String.format("%.2f soles son %.2f dólares", cantidad, resultado);
-              } else if (conversion.equals("Dólares a Soles")) {
-                resultado = cantidad * 3.80;
-                mensajeResultado = String.format("%.2f dólares son %.2f soles", cantidad, resultado);
-              }
+              // Crear JComboBox para seleccionar conversión
+              JComboBox<String> cboConversion = new JComboBox<>(new String[] { 
+                "Soles a Dólares", "Soles a Euros", "Dólares a Soles" });
 
-              // Mostrar resultado en JOptionPane
-              JOptionPane.showMessageDialog(null, mensajeResultado, "Resultado", JOptionPane.INFORMATION_MESSAGE);
+              // Agregar ActionListener al JComboBox
+              cboConversion.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  // Obtener conversión seleccionada
+                  String conversion = (String) cboConversion.getSelectedItem();
 
-              // Ocultar ventana actual
-              setVisible(false);
+                  // Realizar conversión
+                  double resultado = 0;
+                  String mensajeResultado = "";
+                  if (conversion.equals("Soles a Dólares")) {
+                    resultado = cantidad / 3.80;
+                    mensajeResultado = String.format("%.2f soles son %.2f dólares", cantidad, resultado);
+                  } else if (conversion.equals("Soles a Euros")) {
+                    resultado = cantidad * 4.20;
+                    mensajeResultado = String.format("%.2f Soles son %.2f Euros", cantidad, resultado);
+                  }
+                  else if (conversion.equals("Dólares a Soles")) {
+                    resultado = cantidad * 3.80;
+                    mensajeResultado = String.format("%.2f dólares son %.2f soles", cantidad, resultado);
+                  }
+
+                  // Mostrar resultado en JOptionPane
+                  JOptionPane.showMessageDialog(null, mensajeResultado, "Resultado", JOptionPane.INFORMATION_MESSAGE);
+
+                  // Ocultar ventana actual
+                  setVisible(false);
+                }
+              });
+
+              // Agregar JComboBox al JPanel
+              pnlConversion.add(cboConversion);
+
+              // Actualizar contenido del JPanel
+              pnlConversion.revalidate();
+              pnlConversion.repaint();
             }
           });
+
+          // Agregar botón al JPanel
           pnlConversion.add(btnOK);
 
           // Agregar JPanel a la ventana principal
           setContentPane(pnlConversion);
+          pack();
         } else if (opcionSeleccionada.equals("Conversor de Temperatura")) {
           // TODO: Implementar conversor de temperatura
         }
@@ -100,4 +119,3 @@ public class ConvertidorMonedas extends JFrame {
     new ConvertidorMonedas();
   }
 }
-
