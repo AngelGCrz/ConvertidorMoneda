@@ -4,6 +4,7 @@
  */
 package com.pe;
 
+//import java.awt.Dimension;
 /**
  *
  * @author Angel
@@ -34,6 +35,8 @@ public class ConvertidorMonedas extends JFrame {
           // Crear JPanel para conversor de monedas
           JPanel pnlConversion = new JPanel();
 
+          // pnlConversion.setPreferredSize(new Dimension(500, 300));
+
           // Crear JLabel y JTextField para ingresar cantidad
           JLabel lblCantidad = new JLabel("Ingrese la cantidad:");
           JTextField txtCantidad = new JTextField(10);
@@ -52,8 +55,8 @@ public class ConvertidorMonedas extends JFrame {
               double cantidad = Double.parseDouble(txtCantidad.getText());
 
               // Crear JComboBox para seleccionar conversión
-              JComboBox<String> cboConversion = new JComboBox<>(new String[] { 
-                "Soles a Dólares", "Soles a Euros", "Dólares a Soles" });
+              JComboBox<String> cboConversion = new JComboBox<>(new String[] {
+                  "Soles a Dólares", "Soles a Euros", "Dólares a Soles" });
 
               // Agregar ActionListener al JComboBox
               cboConversion.addActionListener(new ActionListener() {
@@ -70,8 +73,7 @@ public class ConvertidorMonedas extends JFrame {
                   } else if (conversion.equals("Soles a Euros")) {
                     resultado = cantidad * 4.20;
                     mensajeResultado = String.format("%.2f Soles son %.2f Euros", cantidad, resultado);
-                  }
-                  else if (conversion.equals("Dólares a Soles")) {
+                  } else if (conversion.equals("Dólares a Soles")) {
                     resultado = cantidad * 3.80;
                     mensajeResultado = String.format("%.2f dólares son %.2f soles", cantidad, resultado);
                   }
@@ -99,8 +101,51 @@ public class ConvertidorMonedas extends JFrame {
           // Agregar JPanel a la ventana principal
           setContentPane(pnlConversion);
           pack();
+          // Establecer tamaño del JFrame
+          // setSize(500, 300);
+
         } else if (opcionSeleccionada.equals("Conversor de Temperatura")) {
-          // TODO: Implementar conversor de temperatura
+          JPanel pnlCoversionTemperatura = new JPanel();
+          JLabel lblCantidadTemperatura = new JLabel("Ingrese la cantidad");
+          JTextField txtCantidadTemperatura = new JTextField(10);
+          pnlCoversionTemperatura.add(lblCantidadTemperatura);
+          pnlCoversionTemperatura.add(txtCantidadTemperatura);
+          JButton btnOKtemperatura = new JButton("OK");
+          btnOKtemperatura.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+              
+              double cantidadTemperatura = Double.parseDouble(txtCantidadTemperatura.getText());
+              
+              JComboBox<String> cboConversionTemperatura = new JComboBox<>(new String []{"Celcios a Fahrenheit","Celcios a Kelvin"});
+              cboConversionTemperatura.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  String conversionTemperatura = (String) cboConversionTemperatura.getSelectedItem();
+
+                  double resultadoTemperatura = 0;
+                  String mensajeResultadoTemperatura = "";
+                  if (conversionTemperatura.equals("Celcios a Fahrenheit")) {
+                    resultadoTemperatura = cantidadTemperatura * 1.8 + 32;
+                    mensajeResultadoTemperatura = String.format("%.2f Celcios son %.2f Fahrenheit", cantidadTemperatura, resultadoTemperatura);
+                  }
+
+                  JOptionPane.showMessageDialog(null, mensajeResultadoTemperatura, "Resultado", JOptionPane.INFORMATION_MESSAGE);
+
+                  setVisible(false);
+                }
+              });
+
+              pnlCoversionTemperatura.add(cboConversionTemperatura);
+              
+              pnlCoversionTemperatura.revalidate();
+              
+              pnlCoversionTemperatura.repaint();
+            }
+          });
+
+          pnlCoversionTemperatura.add(btnOKtemperatura);
+
+          setContentPane(pnlCoversionTemperatura);
+          pack();
         }
       }
     });
